@@ -1,8 +1,10 @@
+package org.example;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        // Create a TherapistManager instance
+        // Create a TherapistManager PatientManager instance
         TherapistManager manager = new TherapistManager();
         PatientManager patient_manager = new PatientManager();
 
@@ -12,8 +14,8 @@ public class Main {
         // Menu loop
         while (true) {
             System.out.println("\n--- Therapist Management System ---");
-            System.out.println("1. Add People");
-            System.out.println("2. View People");
+            System.out.println("1. Therapist");
+            System.out.println("2. Patient");
             System.out.println("3. Treatment");
             System.out.println("4. Appointment");
             System.out.println("5. Exit");
@@ -24,12 +26,13 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    while (true) {
-                        System.out.println("\n--- Add People ---");
+                    do {
+                        System.out.println("\n--- Therapist Management  ---");
                         System.out.println("1. Add a Therapist");
-                        System.out.println("2. Add a Patient");
-                        System.out.print("Enter your choice: ");
+                        System.out.println("2. View All Therapists");
                         //System.out.println("3. Go Back");
+                        System.out.print("Enter your choice: ");
+
 
                         int choice2 = scanner.nextInt();
                         scanner.nextLine(); // Consume the newline character
@@ -59,6 +62,34 @@ public class Main {
                                 break;
 
                             case 2:
+                                // View All Therapists
+                                System.out.println("\nAll Therapists:");
+                                for (Therapist therapist : manager.getAllTherapists()) {
+                                    System.out.println(therapist);
+                                }
+                                break;
+
+                            case 3:
+                                break;
+                        }
+                        break;
+                    } while (true);
+                    break;
+
+
+                case 2:
+                    while (true) {
+                        System.out.println("\n--- Patient Management ---");
+                        System.out.println("1. Add a Patient");
+                        System.out.println("2. View all Patients");
+                        //System.out.println("3. Go Back");
+                        System.out.print("Enter your choice: ");
+
+
+                        int choice2 = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline character
+                        switch (choice2) {
+                            case 1:
                                 //Add a Patient
                                 System.out.println("\nEnter Patient Details:");
                                 System.out.print("Patient ID: ");
@@ -80,33 +111,7 @@ public class Main {
                                 // Create a Patient object and add it to the list
                                 patient_manager.addPatient(new Patient(patient_id, patient_name, patient_address, patient_number, patient_email));
                                 System.out.println("Patient added successfully!");
-                                break;
 
-                            case 3:
-                                break;
-                        }
-                        break;
-                    }
-                    break;
-
-
-                case 2:
-                    while (true) {
-                        System.out.println("\n--- View People ---");
-                        System.out.println("1. View all Therapists");
-                        System.out.println("2. View all Patients");
-                        System.out.print("Enter your choice: ");
-                        //System.out.println("3. Go Back");
-
-                        int choice2 = scanner.nextInt();
-                        scanner.nextLine(); // Consume the newline character
-                        switch (choice2) {
-                            case 1:
-                                // View All Therapists
-                                System.out.println("\nAll Therapists:");
-                                for (Therapist therapist : manager.getAllTherapists()) {
-                                    System.out.println(therapist);
-                                }
                                 break;
 
 
@@ -118,7 +123,7 @@ public class Main {
                                 }
                                 break;
 
-                        }
+                       }
                         break;
 
                     }break;

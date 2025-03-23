@@ -1,3 +1,5 @@
+package org.example;
+
 public class Therapist {
     private int uniqueId;
     private String name;

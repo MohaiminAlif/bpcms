@@ -1,3 +1,5 @@
+package org.example;
+
 public class Patient {
     private int patient_id;
     private String patient_name;
