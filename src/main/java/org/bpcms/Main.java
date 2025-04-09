@@ -1,4 +1,3 @@
-
 package org.bpcms;
 import java.util.Scanner;
 

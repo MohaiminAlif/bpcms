@@ -14,6 +14,12 @@ public class TherapistManager {
 
     // Add a therapist
     public void addTherapist(Therapist therapist) {
+        for (Therapist t : therapists) {
+            if (t.getUniqueId() == therapist.getUniqueId()) {
+                System.out.println("Therapist with this ID already exists!");
+                return;
+            }
+        }
         therapists.add(therapist);
     }
 
