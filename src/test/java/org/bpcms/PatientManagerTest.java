@@ -1,4 +1,4 @@
-package org.example;
+package org.bpcms;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

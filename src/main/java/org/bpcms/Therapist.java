@@ -1,4 +1,4 @@
-package org.example;
+package org.bpcms;
 
 public class Therapist {
     private int uniqueId;
@@ -46,4 +46,6 @@ public class Therapist {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+
 }

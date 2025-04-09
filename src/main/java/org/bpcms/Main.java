@@ -1,5 +1,5 @@
-package org.example;
 
+package org.bpcms;
 import java.util.Scanner;
 
 public class Main {
@@ -26,7 +26,7 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    do {
+                    while (true) {
                         System.out.println("\n--- Therapist Management  ---");
                         System.out.println("1. Add a Therapist");
                         System.out.println("2. View All Therapists");
@@ -73,7 +73,7 @@ public class Main {
                                 break;
                         }
                         break;
-                    } while (true);
+                    }
                     break;
 
 
@@ -124,6 +124,58 @@ public class Main {
                                 break;
 
                        }
+                        break;
+
+                    }break;
+
+
+                case 3:
+                    while (true) {
+                        System.out.println("\n--- Treatment ---");
+                        System.out.println("1. Add a Treatment");
+                        System.out.println("2. Search Treatment");
+                        //System.out.println("3. Go Back");
+                        System.out.print("Enter your choice: ");
+
+
+                        int choice2 = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline character
+                        switch (choice2) {
+                            case 1:
+                                //Add a Patient
+                                System.out.println("\nEnter Patient Details:");
+                                System.out.print("Patient ID: ");
+                                int patient_id = scanner.nextInt();
+                                scanner.nextLine(); // Consume the newline character
+
+                                System.out.print("Name: ");
+                                String patient_name = scanner.nextLine();
+
+                                System.out.print("Address: ");
+                                String patient_address = scanner.nextLine();
+
+                                System.out.print("Number: ");
+                                String patient_number = scanner.nextLine();
+
+                                System.out.print("Email: ");
+                                String patient_email = scanner.nextLine();
+
+                                // Create a Patient object and add it to the list
+                                patient_manager.addPatient(new Patient(patient_id, patient_name, patient_address, patient_number, patient_email));
+                                System.out.println("Patient added successfully!");
+
+                                break;
+
+
+                            case 2:
+                                // View All Patient
+                                System.out.println("\nAll Patients:");
+                                for (Patient patient : patient_manager.getAllPatients()) {
+                                    System.out.println(patient);
+                                }
+                                break;
+
+                        }
                         break;
 
                     }break;
