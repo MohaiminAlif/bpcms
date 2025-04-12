@@ -1,51 +1,40 @@
 package org.bpcms;
+import java.util.List;
 
 public class Therapist {
-    private int uniqueId;
+    private int id;
     private String name;
     private String address;
-    private String number;
-    private String email;
+    private String telephone;
+    public List<String> treatmentsOffered;
+    private Timetable timetable;
 
-    public Therapist(int uniqueId, String name, String address, String number, String email) {
-        this.uniqueId = uniqueId;
+    public Therapist(int id, String name, String address, String telephone,
+                     List<String> treatmentsOffered, Timetable timetable) {
+        this.id = id;
         this.name = name;
         this.address = address;
-        this.number = number;
-        this.email = email;
+        this.telephone = telephone;
+        this.treatmentsOffered = treatmentsOffered;
+        this.timetable = timetable;
     }
 
-    // Getters
-    public int getUniqueId() {
-        return uniqueId;
+    public void displayInfo() {
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Address: " + address);
+        System.out.println("Telephone: " + telephone);
+        System.out.println("Treatments Offered: " + String.join(", ", treatmentsOffered));
+        System.out.println("Timetable:");
+        timetable.displayTimetable();
+        System.out.println("-------------------------------------");
+    }
+
+    public int getID() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    @Override
-    public String toString() {
-        return "Therapist{" +
-                "uniqueId=" + uniqueId +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", number='" + number + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
-
 }
