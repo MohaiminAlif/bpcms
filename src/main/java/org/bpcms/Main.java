@@ -35,8 +35,8 @@ public class Main {
             System.out.println("\n--- Therapist Management System ---");
             System.out.println("1. Therapist");
             System.out.println("2. Patient");
-            System.out.println("3. Treatment");
-            System.out.println("4. Appointment");
+            System.out.println("3. Appointment");
+            System.out.println("4. See all Appointments");
             System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
 
@@ -123,57 +123,6 @@ public class Main {
 
 
                 case 3:
-                    while (true) {
-                        System.out.println("\n--- Treatment ---");
-                        System.out.println("1. Add a Treatment");
-                        System.out.println("2. Search Treatment");
-                        //System.out.println("3. Go Back");
-                        System.out.print("Enter your choice: ");
-
-
-                        int choice2 = scanner.nextInt();
-                        scanner.nextLine(); // Consume the newline character
-                        switch (choice2) {
-                            case 1:
-                                //Add a Patient
-                                System.out.println("\nEnter Patient Details:");
-                                System.out.print("Patient ID: ");
-                                int patient_id = scanner.nextInt();
-                                scanner.nextLine(); // Consume the newline character
-
-                                System.out.print("Name: ");
-                                String patient_name = scanner.nextLine();
-
-                                System.out.print("Address: ");
-                                String patient_address = scanner.nextLine();
-
-                                System.out.print("Number: ");
-                                String patient_number = scanner.nextLine();
-
-                                System.out.print("Email: ");
-                                String patient_email = scanner.nextLine();
-
-                                // Create a Patient object and add it to the list
-                                patient_manager.addPatient(new Patient(patient_id, patient_name, patient_address, patient_number, patient_email));
-                                System.out.println("Patient added successfully!");
-
-                                break;
-
-
-                            case 2:
-                                // View All Patient
-                                System.out.println("\nAll Patients:");
-                                for (Patient patient : patient_manager.getAllPatients()) {
-                                    System.out.println(patient);
-                                }
-                                break;
-
-                        }
-                        break;
-
-                    }break;
-
-                case 4:
                     System.out.println("\nAvailable Treatments:");
                     List<String> allTreatments = Arrays.asList(
                             "Neural mobilisation",
@@ -234,17 +183,36 @@ public class Main {
                         break;
                     }
 
-                    System.out.print("Enter your name: ");
-                    String patientName = scanner.nextLine();
-                    System.out.print("Enter day (e.g., Monday): ");
+                    if (selected == null) {
+                        System.out.println("Invalid Therapist ID!");
+                        break;
+                    }
+
+                    // Show available day/time slots
+                    Map<String, String> slots = selected.getAvailableSlots();
+                    List<Map.Entry<String, String>> slotList = new ArrayList<>(slots.entrySet());
+
+                    System.out.println("\nTherapist's Schedule:");
+                    for (int i = 0; i < slotList.size(); i++) {
+                        Map.Entry<String, String> entry = slotList.get(i);
+                        System.out.println((i + 1) + ". " + entry.getKey() + ": " + entry.getValue());
+                    }
+
+                    System.out.print("Enter day: ");
                     String day = scanner.nextLine();
-                    System.out.print("Enter time (e.g., 10:00 - 11:00): ");
+                    System.out.print("Enter time: ");
                     String time = scanner.nextLine();
 
+                    System.out.print("Enter your name: ");
+                    String patientName = scanner.nextLine();
+
                     bookingManager.makeBooking(selected, patientName, day, time);
+
                     break;
 
-
+                case 4:
+                    bookingManager.showAllBookings();
+                    break;
 
                 case 5:
                     // Exit the program

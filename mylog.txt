@@ -1,0 +1,50 @@
+commit 9394b679154aae88f486596fa303514a2842edee
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Apr 12 21:18:50 2025 +0100
+
+    Main Java updated, Booking and timetable Class added.
+    
+    From the main.java, adding therapist has been removed with static therapist data.
+    Booking system added with filtered treatment wise selection.
+
+commit cfac8832205ed25936c2374260599ff65bdc4992
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Wed Apr 9 17:37:23 2025 +0100
+
+    working on data integrity of the users
+
+commit cfd57ab323afc270097d0fda82eadc2b7880fc3a
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Wed Apr 9 17:22:38 2025 +0100
+
+    path changed, from example to bpcms
+
+commit f97c11d3f27a3d1d2933428c8f9b322d52fee2ec
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sun Mar 23 14:22:02 2025 +0000
+
+    added junit test for the Therapist and Patient Class of the project.
+
+commit e5754b64358cb4a4a9c5ea92b5638b004e2e30b2
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Mon Mar 10 01:01:54 2025 +0000
+
+    Fixed minor Bugs in Main.java
+
+commit aa8677349f64a7b230f87de9bf75f59ca453872e
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Mar 1 15:31:53 2025 +0000
+
+    Created vcs.xml file
+
+commit c2b60eebacaad801c1b58d3adf95d116f52d0866
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Mar 1 15:25:48 2025 +0000
+
+    Added Therapist and Patient instances and Array list, with Add and show users function
+
+commit b44972f2c0626afe89d8f0b2a50fea9d9999f184
+Author: Mohaimin Alif <69976918+MohaiminAlif@users.noreply.github.com>
+Date:   Tue Feb 25 12:56:38 2025 +0000
+
+    Add files via upload

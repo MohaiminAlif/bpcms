@@ -1,5 +1,6 @@
 package org.bpcms;
 import java.util.List;
+import java.util.Map;
 
 public class Therapist {
     private int id;
@@ -37,4 +38,8 @@ public class Therapist {
     public String getName() {
         return name;
     }
+    public Map<String, String> getAvailableSlots() {
+        return timetable.getSchedule();
+    }
+
 }

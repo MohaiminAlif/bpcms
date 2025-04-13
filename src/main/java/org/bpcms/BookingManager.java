@@ -24,6 +24,7 @@ public class BookingManager {
         }
 
         System.out.println("All Bookings:");
+        System.out.println("------------------------------");
         for (Booking booking : bookings) {
             booking.displayBooking();
         }

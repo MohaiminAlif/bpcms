@@ -12,10 +12,17 @@ public class Timetable {
         schedule.put(day, hours);
     }
 
+    public void addSlot(String day, String time) {
+        schedule.put(day, time);
+    }
     public void displayTimetable() {
         for (String day : Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")) {
             String time = schedule.getOrDefault(day, "Off");
             System.out.println("  " + day + ": " + time);
         }
     }
+    public Map<String, String> getSchedule() {
+        return schedule;
+    }
+
 }
