@@ -15,19 +15,20 @@ public class Main {
         // Create 4 therapists (same as before)
         therapists.add(new Therapist(1, "Sarah Hussain", "41 Bridle Cl, EN3 6EA", "07905625362",
                 Arrays.asList("Neural mobilisation", "Massage", "Pool rehabilitation"),
-                createTimetable("Monday", "09:00 - 17:00", "Tuesday", "10:00 - 16:00" )));
+                createTimetable("Monday", "09:00", "12:00", "Wednesday", "10:00", "12:00")));
+
 
         therapists.add(new Therapist(2, "James Bennet", "45 Lynton Garden, EN1 2NF", "0987654321",
                 Arrays.asList("Acupuncture", "Mobilisation of the spine and joints"),
-                createTimetable("Tuesday", "10:00 - 18:00", "Thursday", "09:00 - 17:00")));
+                createTimetable("Tuesday", "10:00", "14:00", "Thursday", "09:00", "15:00")));
 
         therapists.add(new Therapist(3, "Zunaed Ahmed", "78 Forest Road, EN3 3ED", "0172398456",
                 Arrays.asList("Massage", "Pool rehabilitation"),
-                createTimetable("Monday", "08:00 - 12:00", "Friday", "09:00 - 15:00")));
+                createTimetable("Monday", "08:00", "12:00", "Friday", "09:00", "15:00")));
 
         therapists.add(new Therapist(4, "Daniel Steven", "321 High Road, EN2 5AL", "0198765432",
                 Arrays.asList("Neural mobilisation", "Acupuncture", "Mobilisation of the spine and joints"),
-                createTimetable("Wednesday", "13:00 - 17:00", "Thursday", "08:00 - 14:00")));
+                createTimetable("Wednesday", "13:00", "17:00", "Thursday", "08:00", "14:00")));
 
 
         // Menu loop
@@ -39,6 +40,7 @@ public class Main {
             System.out.println("4. See all Appointments");
             System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
+
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
@@ -148,7 +150,6 @@ public class Main {
                     String selectedTreatment = allTreatments.get(treatmentChoice - 1);
                     System.out.println("You selected: " + selectedTreatment);
 
-                    // Filter therapists who offer that treatment
                     List<Therapist> filteredTherapists = new ArrayList<>();
                     for (Therapist t : therapists) {
                         if (t.treatmentsOffered.contains(selectedTreatment)) {
@@ -183,32 +184,46 @@ public class Main {
                         break;
                     }
 
-                    if (selected == null) {
-                        System.out.println("Invalid Therapist ID!");
+                    Map<String, List<String>> availableSlots = selected.getAvailableSlots();
+                    if (availableSlots.isEmpty()) {
+                        System.out.println("No available time slots for this therapist.");
                         break;
                     }
 
-                    // Show available day/time slots
-                    Map<String, String> slots = selected.getAvailableSlots();
-                    List<Map.Entry<String, String>> slotList = new ArrayList<>(slots.entrySet());
-
-                    System.out.println("\nTherapist's Schedule:");
-                    for (int i = 0; i < slotList.size(); i++) {
-                        Map.Entry<String, String> entry = slotList.get(i);
-                        System.out.println((i + 1) + ". " + entry.getKey() + ": " + entry.getValue());
+                    System.out.println("\nAvailable Appointment Slots:");
+                    int count = 1;
+                    Map<Integer, String[]> optionMap = new HashMap<>();
+                    for (String day : availableSlots.keySet()) {
+                        for (String time : availableSlots.get(day)) {
+                            System.out.println(count + ". " + day + " at " + time);
+                            optionMap.put(count, new String[]{day, time});
+                            count++;
+                        }
                     }
 
-                    System.out.print("Enter day: ");
-                    String day = scanner.nextLine();
-                    System.out.print("Enter time: ");
-                    String time = scanner.nextLine();
+                    System.out.print("Select a slot (1-" + (count - 1) + "): ");
+                    int slotChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (!optionMap.containsKey(slotChoice)) {
+                        System.out.println("Invalid slot selected.");
+                        break;
+                    }
+
+                    String[] chosenSlot = optionMap.get(slotChoice);
+                    String selectedDay = chosenSlot[0];
+                    String selectedTime = chosenSlot[1];
 
                     System.out.print("Enter your name: ");
                     String patientName = scanner.nextLine();
 
-                    bookingManager.makeBooking(selected, patientName, day, time);
-
+                    if (selected.book(selectedDay, selectedTime)) {
+                        bookingManager.makeBooking(selected, patientName, selectedDay, selectedTime);
+                    } else {
+                        System.out.println("Slot already booked. Try another.");
+                    }
                     break;
+
 
                 case 4:
                     bookingManager.showAllBookings();
@@ -225,11 +240,19 @@ public class Main {
             }
         }
     }
-    private static Timetable createTimetable(String day1, String time1, String day2, String time2) {
-        Timetable t = new Timetable();
-        t.setDay(day1, time1);
-        t.setDay(day2, time2);
-
-        return t;
+//    private static Timetable createTimetable(String day1, String time1, String day2, String time2) {
+//        Timetable t = new Timetable();
+//        t.setDay(day1, time1);
+//        t.setDay(day2, time2);
+//
+//        return t;
+//    }
+    public static Timetable createTimetable(String... args) {
+        Timetable timetable = new Timetable();
+        for (int i = 0; i < args.length; i += 3) {
+            timetable.addSlot(args[i], args[i+1], args[i+2]);
+        }
+        return timetable;
     }
+
 }

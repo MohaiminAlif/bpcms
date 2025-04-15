@@ -1,3 +1,11 @@
+commit bd47da9eb31934370ece838da270a8baf8ea3ebe
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sun Apr 13 15:17:47 2025 +0100
+
+    Appointment System updated
+    
+    now user can see the treatments, then choose the therapist and theirs schedule, then make the appointment booking
+
 commit 9394b679154aae88f486596fa303514a2842edee
 Author: IMohaiminAlif <imohaiminalif@gmail.com>
 Date:   Sat Apr 12 21:18:50 2025 +0100

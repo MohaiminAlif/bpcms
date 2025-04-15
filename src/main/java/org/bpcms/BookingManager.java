@@ -19,6 +19,7 @@ public class BookingManager {
 
     public void showAllBookings() {
         if (bookings.isEmpty()) {
+            System.out.println("--------------------------------");
             System.out.println("No bookings made yet.");
             return;
         }

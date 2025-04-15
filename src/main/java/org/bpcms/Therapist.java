@@ -38,8 +38,16 @@ public class Therapist {
     public String getName() {
         return name;
     }
-    public Map<String, String> getAvailableSlots() {
-        return timetable.getSchedule();
+//    public Map<String, String> getAvailableSlots() {
+//        return timetable.getSchedule();
+//    }
+    public Map<String, List<String>> getAvailableSlots() {
+        return timetable.getAvailableSlots();
     }
+
+    public boolean book(String day, String time) {
+        return timetable.bookSlot(day, time);
+    }
+
 
 }
