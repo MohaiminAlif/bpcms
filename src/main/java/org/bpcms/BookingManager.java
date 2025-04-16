@@ -4,17 +4,10 @@ import java.util.*;
 public class BookingManager {
     private List<Booking> bookings = new ArrayList<>();
 
-    public void makeBooking(Therapist therapist, String patientName, String day, String time) {
-        // Check if time is already booked
-        for (Booking booking : bookings) {
-            if (booking.therapist == therapist && booking.day.equalsIgnoreCase(day) && booking.time.equals(time)) {
-                System.out.println("This slot is already booked.");
-                return;
-            }
-        }
+    public void makeBooking(Therapist therapist, String patientName, Integer patientID, String day, String time, String status) {
 
-        bookings.add(new Booking(therapist, patientName, day, time));
-        System.out.println("Booking successful!");
+        bookings.add(new Booking(therapist, patientName, patientID, day, time, status));
+        System.out.println("Booking successful for " + patientName + "!");
     }
 
     public void showAllBookings() {

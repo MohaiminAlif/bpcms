@@ -1,49 +1,56 @@
 package org.bpcms;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Patient {
-    private int patient_id;
-    private String patient_name;
-    private String patient_address;
-    private String patient_number;
-    private String patient_email;
+    private static String lastDate = "";
+    private static int dailyCounter = 0;
 
-    public Patient(int patient_id, String patient_name, String patient_address, String patient_number, String patient_email) {
-        this.patient_id = patient_id;
-        this.patient_name = patient_name;
-        this.patient_address = patient_address;
-        this.patient_number = patient_number;
-        this.patient_email = patient_email;
+    private int id;
+    private String name;
+    private String address;
+    private String phone;
+
+    public Patient(String name, String address, String phone) {
+        this.id = generateID();
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+
+
     }
 
-    // Getters
-    public int getUniqueId() {
-        return patient_id;
+
+
+    private int generateID() {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+        String today = LocalDate.now().format(formatter);
+
+        if (!today.equals(lastDate)) {
+            dailyCounter = 1;
+            lastDate = today;
+        } else {
+            dailyCounter++;
+        }
+
+        String counterStr = String.format("%03d", dailyCounter);
+        String fullId = today + counterStr;
+
+        return Integer.parseInt(fullId);
     }
 
-    public String getName() {
-        return patient_name;
-    }
 
-    public String getAddress() {
-        return patient_address;
-    }
+    public int getID() { return id; }
 
-    public String getNumber() {
-        return patient_number;
-    }
+    public String getName() { return name; }
 
-    public String getEmail() {
-        return patient_email;
-    }
+    public String getAddress() { return address; }
+
+    public String getPhone() { return phone; }
 
     @Override
     public String toString() {
-        return "Patient{" +
-                "patient_id=" + patient_id +
-                ", patient_name='" + patient_name + '\'' +
-                ", address='" + patient_address + '\'' +
-                ", number='" + patient_number + '\'' +
-                ", email='" + patient_email + '\'' +
-                '}';
+        return "Patient ID: " + id + ", Name: " + name + ", Address: " + address + ", Phone: " + phone;
     }
 }

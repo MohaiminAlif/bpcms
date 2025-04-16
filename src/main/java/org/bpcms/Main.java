@@ -5,17 +5,17 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 
-        PatientManager patient_manager = new PatientManager();
         BookingManager bookingManager = new BookingManager();
 
         // Create a Scanner object to read input from the console
         Scanner scanner = new Scanner(System.in);
         List<Therapist> therapists = new ArrayList<>();
 
+
         // Create 4 therapists (same as before)
         therapists.add(new Therapist(1, "Sarah Hussain", "41 Bridle Cl, EN3 6EA", "07905625362",
                 Arrays.asList("Neural mobilisation", "Massage", "Pool rehabilitation"),
-                createTimetable("Monday", "09:00", "12:00", "Wednesday", "10:00", "12:00")));
+                createTimetable("Monday", "09:00", "12:00", "Wednesday", "10:00", "14:00")));
 
 
         therapists.add(new Therapist(2, "James Bennet", "45 Lynton Garden, EN1 2NF", "0987654321",
@@ -29,6 +29,18 @@ public class Main {
         therapists.add(new Therapist(4, "Daniel Steven", "321 High Road, EN2 5AL", "0198765432",
                 Arrays.asList("Neural mobilisation", "Acupuncture", "Mobilisation of the spine and joints"),
                 createTimetable("Wednesday", "13:00", "17:00", "Thursday", "08:00", "14:00")));
+
+        List<Patient> patients = new ArrayList<>();
+        patients.add(new Patient("Nusrat Maliha", "55 Kingsley Ave", "01234 567890"));
+        patients.add(new Patient("Ismatara Begum", "56 Kingsley Ave", "01235 678901"));
+        patients.add(new Patient("Kalam Azad", "29 Davey Cl", "01236 789012"));
+        patients.add(new Patient("Yasin Miah", "41 Bridle Cl", "01237 890123"));
+        patients.add(new Patient("Robert Walker", "654 Purple Rd", "01238 901234"));
+        patients.add(new Patient("Mohsin Miah", "26 kestrel Court", "01239 012345"));
+        patients.add(new Patient("Harry Taylor", "147 Pink Ave", "01240 123456"));
+        patients.add(new Patient("Rizwan Azad", "258 Lime Rd", "01241 234567"));
+        patients.add(new Patient("Chris Evans", "369 Bishop Cl", "01242 345678"));
+        patients.add(new Patient("Abid Hussain", "74 Coral Rd", "01243 456789"));
 
 
         // Menu loop
@@ -87,44 +99,60 @@ public class Main {
                             case 1:
                                 //Add a Patient
                                 System.out.println("\nEnter Patient Details:");
-                                System.out.print("Patient ID: ");
-                                int patient_id = scanner.nextInt();
-                                scanner.nextLine(); // Consume the newline character
 
                                 System.out.print("Name: ");
-                                String patient_name = scanner.nextLine();
+                                String patieName = scanner.nextLine();
 
                                 System.out.print("Address: ");
-                                String patient_address = scanner.nextLine();
+                                String patientAddress = scanner.nextLine();
 
                                 System.out.print("Number: ");
-                                String patient_number = scanner.nextLine();
-
-                                System.out.print("Email: ");
-                                String patient_email = scanner.nextLine();
+                                String patientNumber = scanner.nextLine();
 
                                 // Create a Patient object and add it to the list
-                                patient_manager.addPatient(new Patient(patient_id, patient_name, patient_address, patient_number, patient_email));
-                                System.out.println("Patient added successfully!");
+                                patients.add(new Patient(patieName, patientAddress, patientNumber));
+
+
+
 
                                 break;
 
 
                             case 2:
                                 // View All Patient
-                                System.out.println("\nAll Patients:");
-                                for (Patient patient : patient_manager.getAllPatients()) {
-                                    System.out.println(patient);
+                                System.out.println("\n=== Patient List ===");
+                                for (Patient p : patients) {
+                                    System.out.println(p);
                                 }
                                 break;
-
                        }
                         break;
 
-                    }break;
+                    }
+                    break;
 
 
                 case 3:
+                    System.out.println("\n=== Make a Booking ===");
+                    System.out.println("Enter your Patient ID:");
+                    int patientId = scanner.nextInt();
+                    scanner.nextLine(); // consume newline
+
+                    Patient selectedPatient = null;
+                    for (Patient p : patients) {
+                        if (p.getID() == patientId) {
+                            selectedPatient = p;
+                            break;
+                        }
+                    }
+
+                    if (selectedPatient == null) {
+                        System.out.println("No Patient with this ID found.");
+                        break;
+                    }
+
+                    System.out.println("Welcome, " + selectedPatient.getName() + "!\n");
+
                     System.out.println("\nAvailable Treatments:");
                     List<String> allTreatments = Arrays.asList(
                             "Neural mobilisation",
@@ -157,11 +185,6 @@ public class Main {
                         }
                     }
 
-                    if (filteredTherapists.isEmpty()) {
-                        System.out.println("No therapists offer this treatment at the moment.");
-                        break;
-                    }
-
                     System.out.println("Available Therapists for " + selectedTreatment + ":");
                     for (Therapist t : filteredTherapists) {
                         System.out.println("  " + t.getName() + " (ID: " + t.getID() + ")");
@@ -185,11 +208,7 @@ public class Main {
                     }
 
                     Map<String, List<String>> availableSlots = selected.getAvailableSlots();
-                    if (availableSlots.isEmpty()) {
-                        System.out.println("No available time slots for this therapist.");
-                        break;
-                    }
-
+//
                     System.out.println("\nAvailable Appointment Slots:");
                     int count = 1;
                     Map<Integer, String[]> optionMap = new HashMap<>();
@@ -211,14 +230,16 @@ public class Main {
                     }
 
                     String[] chosenSlot = optionMap.get(slotChoice);
-                    String selectedDay = chosenSlot[0];
-                    String selectedTime = chosenSlot[1];
+                    String day = chosenSlot[0];
+                    String time = chosenSlot[1];
 
-                    System.out.print("Enter your name: ");
-                    String patientName = scanner.nextLine();
+                    String patientName = selectedPatient.getName();
+                    Integer patientID = selectedPatient.getID();
+                    String status = "booked";
 
-                    if (selected.book(selectedDay, selectedTime)) {
-                        bookingManager.makeBooking(selected, patientName, selectedDay, selectedTime);
+
+                    if (selected.book(day, time)) {
+                        bookingManager.makeBooking(selected, patientName, patientID, day, time, status);
                     } else {
                         System.out.println("Slot already booked. Try another.");
                     }
@@ -231,7 +252,7 @@ public class Main {
 
                 case 5:
                     // Exit the program
-                    System.out.println("Exiting the program. Goodbye!");
+                    System.out.println("Exiting the program. Thank You!");
                     scanner.close();
                     System.exit(0);
 
@@ -240,13 +261,7 @@ public class Main {
             }
         }
     }
-//    private static Timetable createTimetable(String day1, String time1, String day2, String time2) {
-//        Timetable t = new Timetable();
-//        t.setDay(day1, time1);
-//        t.setDay(day2, time2);
-//
-//        return t;
-//    }
+
     public static Timetable createTimetable(String... args) {
         Timetable timetable = new Timetable();
         for (int i = 0; i < args.length; i += 3) {
