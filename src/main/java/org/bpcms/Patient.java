@@ -16,11 +16,7 @@ public class Patient {
         this.name = name;
         this.address = address;
         this.phone = phone;
-
-
     }
-
-
 
     private int generateID() {
 

@@ -111,9 +111,7 @@ public class Main {
 
                                 // Create a Patient object and add it to the list
                                 patients.add(new Patient(patieName, patientAddress, patientNumber));
-
-
-
+                                System.out.println("Patient Added successfully, Patient ID is " + patients.getLast().getID());
 
                                 break;
 
