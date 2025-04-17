@@ -3,6 +3,8 @@ import java.util.Scanner;
 import java.util.*;
 
 public class Main {
+    private static Patient selectedPatient;
+
     public static void main(String[] args) {
 
         BookingManager bookingManager = new BookingManager();
@@ -48,7 +50,7 @@ public class Main {
             System.out.println("\n--- Therapist Management System ---");
             System.out.println("1. Therapist");
             System.out.println("2. Patient");
-            System.out.println("3. Appointment");
+            System.out.println("3. Appointments");
             System.out.println("4. See all Appointments");
             System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
@@ -62,7 +64,7 @@ public class Main {
                     while (true) {
                         System.out.println("\n--- Therapist Management  ---");
                         System.out.println("1. View All Therapists");
-                        //System.out.println("2. Go Back");
+                        System.out.println("2. Go Back");
                         System.out.print("Enter your choice: ");
 
 
@@ -78,10 +80,8 @@ public class Main {
 
                             case 2:
                                 break;
-                        }
-                        break;
-                    }
-                    break;
+                        }break;
+                    }break;
 
 
                 case 2:
@@ -91,7 +91,6 @@ public class Main {
                         System.out.println("2. View all Patients");
                         //System.out.println("3. Go Back");
                         System.out.print("Enter your choice: ");
-
 
                         int choice2 = scanner.nextInt();
                         scanner.nextLine(); // Consume the newline character
@@ -131,122 +130,198 @@ public class Main {
 
 
                 case 3:
-                    System.out.println("\n=== Make a Booking ===");
-                    System.out.println("Enter your Patient ID:");
-                    int patientId = scanner.nextInt();
-                    scanner.nextLine(); // consume newline
+                    while (true) {
+                        System.out.println("\n--- Booking Management ---");
+                        System.out.println("1. Make a Booking");
+                        System.out.println("2. View all Appointments");
+                        System.out.println("3. Appointment Status");
+                        System.out.println("4. Go Back");
 
-                    Patient selectedPatient = null;
-                    for (Patient p : patients) {
-                        if (p.getID() == patientId) {
-                            selectedPatient = p;
-                            break;
-                        }
-                    }
+                        System.out.print("Enter your choice: ");
+                        int choice3 = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline character
 
-                    if (selectedPatient == null) {
-                        System.out.println("No Patient with this ID found.");
-                        break;
-                    }
+                        switch (choice3) {
+                            case 1:
+                                System.out.println("\n=== Make a Booking ===");
+                                System.out.println("Enter your Patient ID:");
+                                int patientId = scanner.nextInt();
+                                scanner.nextLine(); // consume newline
+                               
+                                for (Patient p : patients) {
+                                    if (p.getID() == patientId) {
+                                        selectedPatient = p;
+                                        break;
+                                    }
+                                }
 
-                    System.out.println("Welcome, " + selectedPatient.getName() + "!\n");
-
-                    System.out.println("\nAvailable Treatments:");
-                    List<String> allTreatments = Arrays.asList(
-                            "Neural mobilisation",
-                            "Acupuncture",
-                            "Massage",
-                            "Mobilisation of the spine and joints",
-                            "Pool rehabilitation"
-                    );
-
-                    for (int i = 0; i < allTreatments.size(); i++) {
-                        System.out.println((i + 1) + ". " + allTreatments.get(i));
-                    }
-
-                    System.out.print("Select a treatment (1-5): ");
-                    int treatmentChoice = scanner.nextInt();
-                    scanner.nextLine();
-
-                    if (treatmentChoice < 1 || treatmentChoice > allTreatments.size()) {
-                        System.out.println("Invalid choice.");
-                        break;
-                    }
-
-                    String selectedTreatment = allTreatments.get(treatmentChoice - 1);
-                    System.out.println("You selected: " + selectedTreatment);
-
-                    List<Therapist> filteredTherapists = new ArrayList<>();
-                    for (Therapist t : therapists) {
-                        if (t.treatmentsOffered.contains(selectedTreatment)) {
-                            filteredTherapists.add(t);
-                        }
-                    }
-
-                    System.out.println("Available Therapists for " + selectedTreatment + ":");
-                    for (Therapist t : filteredTherapists) {
-                        System.out.println("  " + t.getName() + " (ID: " + t.getID() + ")");
-                    }
-
-                    System.out.print("Enter Therapist ID to book: ");
-                    int therapistId = scanner.nextInt();
-                    scanner.nextLine();
-
-                    Therapist selected = null;
-                    for (Therapist t : filteredTherapists) {
-                        if (t.getID() == therapistId) {
-                            selected = t;
-                            break;
-                        }
-                    }
-
-                    if (selected == null) {
-                        System.out.println("Invalid Therapist ID!");
-                        break;
-                    }
-
-                    Map<String, List<String>> availableSlots = selected.getAvailableSlots();
-//
-                    System.out.println("\nAvailable Appointment Slots:");
-                    int count = 1;
-                    Map<Integer, String[]> optionMap = new HashMap<>();
-                    for (String day : availableSlots.keySet()) {
-                        for (String time : availableSlots.get(day)) {
-                            System.out.println(count + ". " + day + " at " + time);
-                            optionMap.put(count, new String[]{day, time});
-                            count++;
-                        }
-                    }
-
-                    System.out.print("Select a slot (1-" + (count - 1) + "): ");
-                    int slotChoice = scanner.nextInt();
-                    scanner.nextLine();
-
-                    if (!optionMap.containsKey(slotChoice)) {
-                        System.out.println("Invalid slot selected.");
-                        break;
-                    }
-
-                    String[] chosenSlot = optionMap.get(slotChoice);
-                    String day = chosenSlot[0];
-                    String time = chosenSlot[1];
-
-                    String patientName = selectedPatient.getName();
-                    Integer patientID = selectedPatient.getID();
-                    String status = "booked";
+                                if (selectedPatient == null) {
+                                    System.out.println("No Patient with this ID found.");
+                                    break;
+                                }
 
 
-                    if (selected.book(day, time)) {
-                        bookingManager.makeBooking(selected, patientName, patientID, day, time, status);
-                    } else {
-                        System.out.println("Slot already booked. Try another.");
-                    }
-                    break;
+                                System.out.println("Welcome, " + selectedPatient.getName() + "!\n");
+
+                                System.out.println("\nAvailable Treatments:");
+                                List<String> allTreatments = Arrays.asList(
+                                        "Neural mobilisation",
+                                        "Acupuncture",
+                                        "Massage",
+                                        "Mobilisation of the spine and joints",
+                                        "Pool rehabilitation"
+                                );
+
+                                for (int i = 0; i < allTreatments.size(); i++) {
+                                    System.out.println((i + 1) + ". " + allTreatments.get(i));
+                                }
+
+                                System.out.print("Select a treatment (1-5): ");
+                                int treatmentChoice = scanner.nextInt();
+                                scanner.nextLine();
+
+                                if (treatmentChoice < 1 || treatmentChoice > allTreatments.size()) {
+                                    System.out.println("Invalid choice.");
+                                    break;
+                                }
+
+                                String selectedTreatment = allTreatments.get(treatmentChoice - 1);
+                                System.out.println("You selected: " + selectedTreatment);
+
+                                List<Therapist> filteredTherapists = new ArrayList<>();
+                                for (Therapist t : therapists) {
+                                    if (t.treatmentsOffered.contains(selectedTreatment)) {
+                                        filteredTherapists.add(t);
+                                    }
+                                }
 
 
-                case 4:
-                    bookingManager.showAllBookings();
-                    break;
+
+                                System.out.println("Available Therapists for " + selectedTreatment + ":");
+                                for (Therapist t : filteredTherapists) {
+                                    System.out.println("  " + t.getName() + " (ID: " + t.getID() + ")");
+                                }
+
+                                System.out.print("Enter Therapist ID to book: ");
+                                int therapistId = scanner.nextInt();
+                                scanner.nextLine();
+
+                                Therapist selected = null;
+                                for (Therapist t : filteredTherapists) {
+                                    if (t.getID() == therapistId) {
+                                        selected = t;
+                                        break;
+                                    }
+                                }
+
+
+                                if (selected == null) {
+                                    System.out.println("Invalid Therapist ID!");
+                                    break;
+                                }
+
+                                Map<String, List<String>> availableSlots = selected.getAvailableSlots();
+                                //
+                                System.out.println("\nAvailable Appointment Slots:");
+                                int count = 1;
+                                Map<Integer, String[]> optionMap = new HashMap<>();
+                                for (String day : availableSlots.keySet()) {
+                                    for (String time : availableSlots.get(day)) {
+                                        System.out.println(count + ". " + day + " at " + time);
+                                        optionMap.put(count, new String[]{day, time});
+                                        count++;
+                                    }
+                                }
+
+                                System.out.print("Select a slot (1-" + (count - 1) + "): ");
+                                int slotChoice = scanner.nextInt();
+                                scanner.nextLine();
+
+                                if (!optionMap.containsKey(slotChoice)) {
+                                    System.out.println("Invalid slot selected.");
+                                    break;
+                                }
+
+                                String[] chosenSlot = optionMap.get(slotChoice);
+                                String day = chosenSlot[0];
+                                String time = chosenSlot[1];
+
+                                String patientName = selectedPatient.getName();
+                                Integer patientID = selectedPatient.getID();
+                                String status = "booked";
+
+
+                                if (selected.book(day, time)) {
+                                    bookingManager.makeBooking(selected, patientName, patientID, day, time, status);
+                                } else {
+                                    System.out.println("Slot already booked. Try another.");
+                                }break;
+
+
+                            case 2:
+                                bookingManager.showAllBookings();
+                                break;
+
+
+                            case 3:
+                                System.out.print("Enter your Patient ID: ");
+                                int updateId = scanner.nextInt();
+                                scanner.nextLine();
+
+                                Patient bookingPatient = null;
+                                for (Patient p : patients) {
+                                    if (p.getID() == updateId) {
+                                        bookingPatient = p;
+                                        break;
+                                    }
+                                }
+
+                                if (bookingPatient == null) {
+                                    System.out.println("Patient not found.");
+                                    break;
+                                }
+
+                                List<Booking> patientBookings = bookingManager.getBookingsByPatient(bookingPatient.getName());
+
+                                if (patientBookings.isEmpty()) {
+                                    System.out.println("No bookings found for " + bookingPatient.getName());
+                                    break;
+                                }
+
+                                System.out.println("\nYour Bookings:");
+                                for (int i = 0; i < patientBookings.size(); i++) {
+                                    System.out.println((i + 1) + ". " + patientBookings.get(i).getSummary());
+                                }
+
+                                System.out.print("Select a booking to update: ");
+                                int bookingIndex = scanner.nextInt() - 1;
+                                scanner.nextLine();
+
+                                if (bookingIndex < 0 || bookingIndex >= patientBookings.size()) {
+                                    System.out.println("Invalid selection.");
+                                    break;
+                                }
+
+                                Booking selectedBooking = patientBookings.get(bookingIndex);
+
+                                System.out.println("Current status: " + selectedBooking.getStatus());
+                                System.out.println("Enter new status (Booked / Cancelled / Visited): ");
+                                String newStatus = scanner.nextLine();
+
+                                if (newStatus.equalsIgnoreCase("Booked") ||
+                                        newStatus.equalsIgnoreCase("Cancelled") ||
+                                        newStatus.equalsIgnoreCase("Visited")) {
+                                    selectedBooking.setStatus(newStatus);
+                                    System.out.println("Booking status updated successfully.");
+                                } else {
+                                    System.out.println("Invalid status input.");
+                                }
+                                break;
+                            case 4:
+                                break;
+                        }break;
+
+                    }break;
 
                 case 5:
                     // Exit the program

@@ -23,4 +23,15 @@ public class BookingManager {
             booking.displayBooking();
         }
     }
+    public List<Booking> getBookingsByPatient(String patientName) {
+        List<Booking> result = new ArrayList<>();
+        for (Booking b : bookings) {
+            if (b.getPatientName().equalsIgnoreCase(patientName)) {
+                result.add(b);
+            }
+        }
+        return result;
+    }
+
+
 }
