@@ -28,7 +28,7 @@ public class Booking {
         return id;
     }
 
-    public void setStatus(String status) {
+    public void setBookingStatus(String status) {
         this.status = status;
     }
 

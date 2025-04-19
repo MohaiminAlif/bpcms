@@ -7,7 +7,7 @@ public class BookingManager {
     public void makeBooking(Therapist therapist, String patientName, Integer patientID, String day, String time, String status) {
 
         bookings.add(new Booking(therapist, patientName, patientID, day, time, status));
-        System.out.println("Booking successful for " + patientName + "!");
+        System.out.println("Booking successful for " + patientName + "!, and Booking ID is " + bookings.getLast().getBookingID());
     }
 
     public void showAllBookings() {

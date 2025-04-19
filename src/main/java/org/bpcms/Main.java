@@ -190,12 +190,10 @@ public class Main {
 
                                 List<Therapist> filteredTherapists = new ArrayList<>();
                                 for (Therapist t : therapists) {
-                                    if (t.treatmentsOffered.contains(selectedTreatment)) {
+                                    if (t.treatments.contains(selectedTreatment)) {
                                         filteredTherapists.add(t);
                                     }
                                 }
-
-
 
                                 System.out.println("Available Therapists for " + selectedTreatment + ":");
                                 for (Therapist t : filteredTherapists) {
@@ -221,7 +219,7 @@ public class Main {
                                 }
 
                                 Map<String, List<String>> availableSlots = selected.getAvailableSlots();
-                                //
+
                                 System.out.println("\nAvailable Appointment Slots:");
                                 int count = 1;
                                 Map<Integer, String[]> optionMap = new HashMap<>();
@@ -311,7 +309,7 @@ public class Main {
                                 if (newStatus.equalsIgnoreCase("Booked") ||
                                         newStatus.equalsIgnoreCase("Cancelled") ||
                                         newStatus.equalsIgnoreCase("Visited")) {
-                                    selectedBooking.setStatus(newStatus);
+                                    selectedBooking.setBookingStatus(newStatus);
                                     System.out.println("Booking status updated successfully.");
                                 } else {
                                     System.out.println("Invalid status input.");

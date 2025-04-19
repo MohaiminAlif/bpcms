@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="bpcms:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/bpcms_jar</output-path>
+    <root id="archive" name="bpcms.jar">
+      <element id="module-output" name="bpcms" />
+    </root>
+  </artifact>
+</component>

@@ -7,7 +7,7 @@ public class Therapist {
     private String name;
     private String address;
     private String telephone;
-    public List<String> treatmentsOffered;
+    public List<String> treatments;
     private Timetable timetable;
 
     public Therapist(int id, String name, String address, String telephone,
@@ -16,7 +16,7 @@ public class Therapist {
         this.name = name;
         this.address = address;
         this.telephone = telephone;
-        this.treatmentsOffered = treatmentsOffered;
+        this.treatments = treatmentsOffered;
         this.timetable = timetable;
     }
 
@@ -25,7 +25,7 @@ public class Therapist {
         System.out.println("Name: " + name);
         System.out.println("Address: " + address);
         System.out.println("Telephone: " + telephone);
-        System.out.println("Treatments Offered: " + String.join(", ", treatmentsOffered));
+        System.out.println("Treatments Offered: " + String.join(", ", treatments));
         System.out.println("Timetable:");
         timetable.displayTimetable();
         System.out.println("-------------------------------------");
@@ -38,9 +38,7 @@ public class Therapist {
     public String getName() {
         return name;
     }
-//    public Map<String, String> getAvailableSlots() {
-//        return timetable.getSchedule();
-//    }
+
     public Map<String, List<String>> getAvailableSlots() {
         return timetable.getAvailableSlots();
     }

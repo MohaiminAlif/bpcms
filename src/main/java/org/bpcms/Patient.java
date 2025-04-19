@@ -9,13 +9,13 @@ public class Patient {
     private int id;
     private String name;
     private String address;
-    private String phone;
+    private String telephone;
 
     public Patient(String name, String address, String phone) {
         this.id = generateID();
         this.name = name;
         this.address = address;
-        this.phone = phone;
+        this.telephone = phone;
     }
 
     private int generateID() {
@@ -41,12 +41,8 @@ public class Patient {
 
     public String getName() { return name; }
 
-    public String getAddress() { return address; }
-
-    public String getPhone() { return phone; }
-
     @Override
     public String toString() {
-        return "Patient ID: " + id + ", Name: " + name + ", Address: " + address + ", Phone: " + phone;
+        return "Patient ID: " + id + ", Name: " + name + ", Address: " + address + ", Telephone: " + telephone;
     }
 }
