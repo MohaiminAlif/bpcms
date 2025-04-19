@@ -36,5 +36,25 @@ class PatientTest {
         assertTrue(datePart.matches("\\d{6}"), "ID should start with a 6-digit date part (yyMMdd).");
         assertTrue(counterPart.matches("\\d{3}"), "ID should end with a 3-digit counter part.");
     }
-    
+
+    @Test
+    void testGenerateIDUniqueness() {
+        // To ensure that IDs are unique per day, create two patients and check that their IDs are different.
+        Patient patient2 = new Patient("Jane Doe", "456 Another St", "555-5678");
+
+        int id1 = Integer.parseInt(patient.toString().split(",")[0].split(":")[1].trim());
+        int id2 = Integer.parseInt(patient2.toString().split(",")[0].split(":")[1].trim());
+
+        // Check that the two patients have different IDs (ensuring uniqueness for the day)
+        assertNotEquals(id1, id2, "IDs should be unique per patient on the same day.");
+    }
+
+    @Test
+    void testToString() {
+        // Test the toString method to ensure the correct format is returned.
+        String expectedToString = "Patient ID: " + patient.toString().split(",")[0].split(":")[1].trim() +
+                ", Name: John Doe, Address: 123 Main St, Telephone: 555-1234";
+
+        assertEquals(expectedToString, patient.toString(), "toString() should return the correct string representation.");
+    }
 }
