@@ -11,12 +11,12 @@ public class Therapist {
     private Timetable timetable;
 
     public Therapist(int id, String name, String address, String telephone,
-                     List<String> treatmentsOffered, Timetable timetable) {
+                     List<String> treatments, Timetable timetable) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.telephone = telephone;
-        this.treatments = treatmentsOffered;
+        this.treatments = treatments;
         this.timetable = timetable;
     }
 
@@ -29,6 +29,16 @@ public class Therapist {
         System.out.println("Timetable:");
         timetable.displayTimetable();
         System.out.println("-------------------------------------");
+    }
+
+    public Therapist(int id, String name, List<String> treatments) {
+        this.id = id;
+        this.name = name;
+        this.treatments = treatments;
+    }
+
+    public List<String> getTreatments() {
+        return treatments;
     }
 
     public int getID() {

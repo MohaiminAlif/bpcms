@@ -136,7 +136,6 @@ public class Main {
                         System.out.println("2. View all Appointments");
                         System.out.println("3. Appointment Status");
                         System.out.println("4. Go Back");
-
                         System.out.print("Enter your choice: ");
                         int choice3 = scanner.nextInt();
                         scanner.nextLine(); // Consume the newline character
@@ -159,34 +158,38 @@ public class Main {
                                     System.out.println("No Patient with this ID found.");
                                     break;
                                 }
-
-
                                 System.out.println("Welcome, " + selectedPatient.getName() + "!\n");
 
-                                System.out.println("\nAvailable Treatments:");
-                                List<String> allTreatments = Arrays.asList(
-                                        "Neural mobilisation",
-                                        "Acupuncture",
-                                        "Massage",
-                                        "Mobilisation of the spine and joints",
-                                        "Pool rehabilitation"
-                                );
-
-                                for (int i = 0; i < allTreatments.size(); i++) {
-                                    System.out.println((i + 1) + ". " + allTreatments.get(i));
+                                Set<String> allTreatments = new HashSet<>();
+                                for (Therapist t : therapists) {
+                                    allTreatments.addAll(t.getTreatments());
                                 }
+                                List<String> treatmentList = new ArrayList<>(allTreatments);
+                                Collections.sort(treatmentList); // Optional, for nice display
 
-                                System.out.print("Select a treatment (1-5): ");
+                                System.out.println("Available Treatments:");
+                                for (int i = 0; i < treatmentList.size(); i++) {
+                                    System.out.println((i + 1) + ". " + treatmentList.get(i));
+                                }
+                                System.out.println("0. Cancel and return");
+
+                                System.out.print("Select a treatment (0-" + treatmentList.size() + "): ");
                                 int treatmentChoice = scanner.nextInt();
                                 scanner.nextLine();
 
-                                if (treatmentChoice < 1 || treatmentChoice > allTreatments.size()) {
-                                    System.out.println("Invalid choice.");
+                                if (treatmentChoice == 0) {
+                                    System.out.println("Cancelled. Returning to main menu...");
                                     break;
                                 }
 
-                                String selectedTreatment = allTreatments.get(treatmentChoice - 1);
+                                if (treatmentChoice < 1 || treatmentChoice > treatmentList.size()) {
+                                    System.out.println("Invalid selection.");
+                                    break;
+                                }
+
+                                String selectedTreatment = treatmentList.get(treatmentChoice - 1);
                                 System.out.println("You selected: " + selectedTreatment);
+
 
                                 List<Therapist> filteredTherapists = new ArrayList<>();
                                 for (Therapist t : therapists) {
@@ -200,9 +203,16 @@ public class Main {
                                     System.out.println("  " + t.getName() + " (ID: " + t.getID() + ")");
                                 }
 
+                                System.out.println("  0. Cancel and return");
+
                                 System.out.print("Enter Therapist ID to book: ");
                                 int therapistId = scanner.nextInt();
                                 scanner.nextLine();
+
+                                if (therapistId == 0) {
+                                    System.out.println("Cancelled!!");
+                                    break;
+                                }
 
                                 Therapist selected = null;
                                 for (Therapist t : filteredTherapists) {
@@ -212,10 +222,9 @@ public class Main {
                                     }
                                 }
 
-
                                 if (selected == null) {
-                                    System.out.println("Invalid Therapist ID!");
-                                    break;
+                                    System.out.println("Invalid Therapist ID! Returning to main menu...");
+                                    break; // or return;
                                 }
 
                                 Map<String, List<String>> availableSlots = selected.getAvailableSlots();
@@ -231,9 +240,15 @@ public class Main {
                                     }
                                 }
 
-                                System.out.print("Select a slot (1-" + (count - 1) + "): ");
+                                System.out.println("0. Cancel and return");
+                                System.out.print("Select a slot (0-" + (count - 1) + "): ");
                                 int slotChoice = scanner.nextInt();
                                 scanner.nextLine();
+
+                                if (slotChoice == 0) {
+                                    System.out.println("Cancelled!!");
+                                    break;
+                                }
 
                                 if (!optionMap.containsKey(slotChoice)) {
                                     System.out.println("Invalid slot selected.");
@@ -340,5 +355,6 @@ public class Main {
         }
         return timetable;
     }
+
 
 }
