@@ -1,4 +1,6 @@
 package org.bpcms;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.*;
 
@@ -9,28 +11,47 @@ public class Main {
 
         BookingManager bookingManager = new BookingManager();
 
-        // Create a Scanner object to read input from the console
-        Scanner scanner = new Scanner(System.in);
-        List<Therapist> therapists = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);// Create a Scanner object to read input from the console
+
+        // Create separate timetables for each therapist
+        Timetable timetable1 = new Timetable();
+        timetable1.addSlot(1, "Monday", "09:00", "12:00");
+        timetable1.addSlot(2, "Wednesday", "10:00", "13:00");
+        timetable1.addSlot(3, "Monday", "14:00", "18:00");
+        timetable1.addSlot(4, "Thursday", "09:00", "12:00");
+
+        Timetable timetable2 = new Timetable();
+        timetable2.addSlot(1, "Tuesday", "10:00", "14:00");
+        timetable2.addSlot(2, "Thursday", "09:00", "15:00");
+        timetable2.addSlot(3, "Monday", "08:00", "12:00");
+        timetable2.addSlot(4, "Friday", "09:00", "13:00");
+
+        Timetable timetable3 = new Timetable();
+        timetable3.addSlot(1, "Wednesday", "08:00", "12:00");
+        timetable3.addSlot(2, "Friday", "09:00", "12:00");
+        timetable3.addSlot(3, "Tuesday", "14:00", "18:00");
+        timetable3.addSlot(4, "Monday", "10:00", "13:00");
+
+        Timetable timetable4 = new Timetable();
+        timetable4.addSlot(1, "Thursday", "13:00", "17:00");
+        timetable4.addSlot(2, "Monday", "08:00", "11:00");
+        timetable4.addSlot(3, "Wednesday", "14:00", "17:00");
+        timetable4.addSlot(4, "Friday", "09:00", "12:00");
+
+// Now assign each timetable to the corresponding therapist
+        List<Therapist> therapists = Arrays.asList(
+                new Therapist(1, "Sarah Hussain", "41 Bridle Cl, EN3 6EA", "07905625362",
+                        Arrays.asList("Neural mobilisation", "Massage", "Pool rehabilitation"), timetable1),
+                new Therapist(2, "James Bennet", "45 Lynton Garden, EN1 2NF", "0987654321",
+                        Arrays.asList("Acupuncture", "Mobilisation of the spine and joints"), timetable2),
+                new Therapist(3, "Zunaed Ahmed", "78 Forest Road, EN3 3ED", "0172398456",
+                        Arrays.asList("Massage", "Pool rehabilitation"), timetable3),
+                new Therapist(4, "Daniel Steven", "321 High Road, EN2 5AL", "0198765432",
+                        Arrays.asList("Neural mobilisation", "Acupuncture", "Mobilisation of the spine and joints"), timetable4)
+        );
 
 
-        // Create 4 therapists (same as before)
-        therapists.add(new Therapist(1, "Sarah Hussain", "41 Bridle Cl, EN3 6EA", "07905625362",
-                Arrays.asList("Neural mobilisation", "Massage", "Pool rehabilitation"),
-                createTimetable("Monday", "09:00", "12:00", "Wednesday", "10:00", "14:00")));
 
-
-        therapists.add(new Therapist(2, "James Bennet", "45 Lynton Garden, EN1 2NF", "0987654321",
-                Arrays.asList("Acupuncture", "Mobilisation of the spine and joints"),
-                createTimetable("Tuesday", "10:00", "14:00", "Thursday", "09:00", "15:00")));
-
-        therapists.add(new Therapist(3, "Zunaed Ahmed", "78 Forest Road, EN3 3ED", "0172398456",
-                Arrays.asList("Massage", "Pool rehabilitation"),
-                createTimetable("Monday", "08:00", "12:00", "Friday", "09:00", "15:00")));
-
-        therapists.add(new Therapist(4, "Daniel Steven", "321 High Road, EN2 5AL", "0198765432",
-                Arrays.asList("Neural mobilisation", "Acupuncture", "Mobilisation of the spine and joints"),
-                createTimetable("Wednesday", "13:00", "17:00", "Thursday", "08:00", "14:00")));
 
         List<Patient> patients = new ArrayList<>();
         patients.add(new Patient("Nusrat Maliha", "55 Kingsley Ave", "01234 567890"));
@@ -45,13 +66,13 @@ public class Main {
         patients.add(new Patient("Abid Hussain", "74 Coral Rd", "01243 456789"));
 
 
-        // Menu loop
+
         while (true) {
             System.out.println("\n--- Therapist Management System ---");
             System.out.println("1. Therapist");
             System.out.println("2. Patient");
             System.out.println("3. Appointments");
-            System.out.println("4. See all Appointments");
+            System.out.println("4. View Full Calendar Appointments");
             System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
 
@@ -69,12 +90,11 @@ public class Main {
 
 
                         int choice2 = scanner.nextInt();
-                        scanner.nextLine(); // Consume the newline character
+                        scanner.nextLine();
                         switch (choice2) {
-                            case 1:
-                                // View All Therapists
-                                for (Therapist t : therapists) {
-                                    t.displayInfo();
+                            case 1://view all therapist
+                                for (Therapist therapist : therapists) {
+                                    therapist.displayInfo();
                                 }
                                 break;
 
@@ -89,14 +109,14 @@ public class Main {
                         System.out.println("\n--- Patient Management ---");
                         System.out.println("1. Add a Patient");
                         System.out.println("2. View all Patients");
-                        //System.out.println("3. Go Back");
+                        System.out.println("3. Go Back");
                         System.out.print("Enter your choice: ");
 
                         int choice2 = scanner.nextInt();
-                        scanner.nextLine(); // Consume the newline character
+                        scanner.nextLine();
                         switch (choice2) {
-                            case 1:
-                                //Add a Patient
+                            case 1://Add Patient
+
                                 System.out.println("\nEnter Patient Details:");
 
                                 System.out.print("Name: ");
@@ -108,19 +128,20 @@ public class Main {
                                 System.out.print("Number: ");
                                 String patientNumber = scanner.nextLine();
 
-                                // Create a Patient object and add it to the list
-                                patients.add(new Patient(patieName, patientAddress, patientNumber));
+                                patients.add(new Patient(patieName, patientAddress, patientNumber));// Create a Patient object and add it to the list
                                 System.out.println("Patient Added successfully, Patient ID is " + patients.getLast().getID());
 
                                 break;
 
 
-                            case 2:
-                                // View All Patient
+                            case 2:// View All Patient
                                 System.out.println("\n=== Patient List ===");
                                 for (Patient p : patients) {
                                     System.out.println(p);
                                 }
+                                break;
+
+                            case 3:
                                 break;
                        }
                         break;
@@ -138,15 +159,15 @@ public class Main {
                         System.out.println("4. Go Back");
                         System.out.print("Enter your choice: ");
                         int choice3 = scanner.nextInt();
-                        scanner.nextLine(); // Consume the newline character
+                        scanner.nextLine();
 
                         switch (choice3) {
                             case 1:
                                 System.out.println("\n=== Make a Booking ===");
                                 System.out.println("Enter your Patient ID:");
                                 int patientId = scanner.nextInt();
-                                scanner.nextLine(); // consume newline
-                               
+                                scanner.nextLine();
+
                                 for (Patient p : patients) {
                                     if (p.getID() == patientId) {
                                         selectedPatient = p;
@@ -224,19 +245,24 @@ public class Main {
 
                                 if (selected == null) {
                                     System.out.println("Invalid Therapist ID! Returning to main menu...");
-                                    break; // or return;
+                                    break;
                                 }
 
-                                Map<String, List<String>> availableSlots = selected.getAvailableSlots();
+                                Map<Integer, Map<String, List<String>>> availableSlots = selected.getAvailableSlots();// Get the available slots from the therapist
 
                                 System.out.println("\nAvailable Appointment Slots:");
                                 int count = 1;
                                 Map<Integer, String[]> optionMap = new HashMap<>();
-                                for (String day : availableSlots.keySet()) {
-                                    for (String time : availableSlots.get(day)) {
-                                        System.out.println(count + ". " + day + " at " + time);
-                                        optionMap.put(count, new String[]{day, time});
-                                        count++;
+
+                                // Loops over each week and available slots for the therapist
+                                for (Integer week : availableSlots.keySet()) {
+                                    for (String day : availableSlots.get(week).keySet()) {
+                                        for (String time : availableSlots.get(week).get(day)) {
+
+                                            System.out.println(count + ". Week " + week + " - " + day + " at " + time);
+                                            optionMap.put(count, new String[]{String.valueOf(week), day, time});
+                                            count++;
+                                        }
                                     }
                                 }
 
@@ -245,31 +271,46 @@ public class Main {
                                 int slotChoice = scanner.nextInt();
                                 scanner.nextLine();
 
+
                                 if (slotChoice == 0) {
                                     System.out.println("Cancelled!!");
                                     break;
                                 }
+
 
                                 if (!optionMap.containsKey(slotChoice)) {
                                     System.out.println("Invalid slot selected.");
                                     break;
                                 }
 
+                                // Retrieve the selected week, day, and time
                                 String[] chosenSlot = optionMap.get(slotChoice);
-                                String day = chosenSlot[0];
-                                String time = chosenSlot[1];
+                                int selectedWeek = Integer.parseInt(chosenSlot[0]);
+                                String day = chosenSlot[1];
+                                String time = chosenSlot[2];
 
+                                // Retrieve patient details
                                 String patientName = selectedPatient.getName();
                                 Integer patientID = selectedPatient.getID();
                                 String status = "booked";
 
+                                // Check if already booked in same week, day, time
+                                if (bookingManager.isAlreadyBooked(patientID, selectedWeek, day, time)) {
+                                    System.out.println("You already have an appointment on Week " + selectedWeek + ", " + day + " at " + time);
+                                    break;
+                                }
 
-                                if (selected.book(day, time)) {
-                                    bookingManager.makeBooking(selected, patientName, patientID, day, time, status);
+                                // Attempt to book the slot
+                                if (selected.book(selectedWeek, day, time)) {
+                                    // Create a booking object with the selected week number
+                                    Booking booking = new Booking(selected, patientName, patientID, selectedWeek, day, time, selectedTreatment, status);
+                                    bookingManager.makeBooking(booking);  // Store the booking with week number
+
                                 } else {
                                     System.out.println("Slot already booked. Try another.");
-                                }break;
+                                }
 
+                                break;
 
                             case 2:
                                 bookingManager.showAllBookings();
@@ -331,16 +372,22 @@ public class Main {
                                 }
                                 break;
                             case 4:
+
                                 break;
                         }break;
 
                     }break;
 
+                case 4:
+                    bookingManager.displayCalendar();
+                    break;
                 case 5:
-                    // Exit the program
+
                     System.out.println("Exiting the program. Thank You!");
                     scanner.close();
                     System.exit(0);
+
+
 
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -348,13 +395,38 @@ public class Main {
         }
     }
 
-    public static Timetable createTimetable(String... args) {
-        Timetable timetable = new Timetable();
-        for (int i = 0; i < args.length; i += 3) {
-            timetable.addSlot(args[i], args[i+1], args[i+2]);
+    private static Map<Integer, Map<String, List<String>>> createSingleDayWeeklySchedule(
+            String[] days, String[] startTimes, String[] endTimes) {
+
+        Map<Integer, Map<String, List<String>>> schedule = new HashMap<>();
+
+        for (int week = 0; week < 4; week++) {
+            Map<String, List<String>> weekSchedule = new HashMap<>();
+            weekSchedule.put(days[week], generateTimeSlots(startTimes[week], endTimes[week]));
+            schedule.put(week + 1, weekSchedule);
         }
-        return timetable;
+
+        return schedule;
     }
 
+    private static List<String> generateTimeSlots(String start, String end) {
+        List<String> slots = new ArrayList<>();
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            Date startTime = sdf.parse(start);
+            Date endTime = sdf.parse(end);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(startTime);
+
+            while (calendar.getTime().before(endTime)) {
+                slots.add(sdf.format(calendar.getTime()));
+                calendar.add(Calendar.MINUTE, 60);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return slots;
+    }
 
 }
