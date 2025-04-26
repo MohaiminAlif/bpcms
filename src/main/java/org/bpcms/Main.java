@@ -76,7 +76,6 @@ public class Main {
             System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
 
-
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
 

@@ -81,7 +81,7 @@ public class BookingManager {
         for (Booking booking : bookings) {
             if (
                     booking.getPatientID() == patientID &&
-                            booking.getWeek() == week &&
+                            booking.getWeekNumber() == week &&
                             booking.getDay().equals(day) &&
                             booking.getTime().equals(time) &&
                             booking.getStatus().equalsIgnoreCase("booked")

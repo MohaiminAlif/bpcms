@@ -25,6 +25,7 @@ public class Booking {
         this.status = status;
         this.treatment = treatment;
     }
+
     private int generateID() {
         return initialId++;
 
@@ -55,9 +56,13 @@ public class Booking {
         return status;
     }
 
-    public Therapist getTherapist() { return therapist; }
+    public Therapist getTherapist() {
+        return therapist;
+    }
 
-    public String getTreatment() { return treatment; }
+    public String getTreatment() {
+        return treatment;
+    }
 
 
     public String getSummary() {
@@ -69,9 +74,6 @@ public class Booking {
         return patientID;
     }
 
-    public int getWeek(){
-        return weekNumber;
-    }
 
 
     public void displayBooking() {
