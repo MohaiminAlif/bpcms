@@ -49,26 +49,12 @@ public class Therapist {
         return name;
     }
 
-//    public Map<String, List<String>> getAvailableSlots() {
-//        return timetable.getAvailableSlots();
-//    }
-//
-//    public boolean book(String day, String time) {
-//        return timetable.bookSlot(day, time);
-//    }
-
     public Map<Integer, Map<String, List<String>>> getAvailableSlots() {
         return timetable.getAvailableSlots();
     }
-//    public Map<String, List<String>> getAvailableSlots() {
-//        return timetable.getAvailableSlots();
-//    }
-
 
     public boolean book(int week, String day, String time) {
         return timetable.bookSlot(week, day, time);
     }
-
-
 
 }
