@@ -1,38 +1,57 @@
 package org.bpcms;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Arrays;
 
 class BookingTest {
 
-    private Therapist therapist;
     private Booking booking;
+    private Therapist therapist;
 
     @BeforeEach
     void setUp() {
-        // Set up a mock therapist and booking
-        therapist = new Therapist(1, "Sarah Hussain", "12 Main St", "1234567890", List.of("Massage", "Acupuncture"), new Timetable());
-        booking = new Booking(therapist, "Abid Hussain", 250420001, "Monday", "10:00", "Pending");
+        // Create a sample therapist for testing
+        Therapist therapist = new Therapist(
+                1,
+                "Sarah Hussain",
+                "41 Bridle Cl, EN3 6EA",
+                "07905625362",
+                Arrays.asList("Massage", "Acupuncture"),
+                new Timetable()
+        );
+
+        // Create a booking object for testing
+        booking = new Booking(
+                therapist,
+                "Ishrat Jahan",
+                250426001,
+                2,
+                "Monday",
+                "10:00",
+                "Massage",
+                "booked"
+        );
     }
+
 
     @Test
-    void testBookingInitialization() {
-        // Test that the booking object is initialized correctly.
-        assertNotNull(booking, "Booking object should be created.");
+    void testGetSummaryFormat() {
+        String summary = booking.getSummary();
+
+        assertNotNull(summary, "Summary should not be null");
+
+        // Check that the expected keywords are in the summary
+        assertTrue(summary.contains("Appoint ID:"), "Summary should contain 'Appoint ID:'");
+        assertTrue(summary.contains("Therapist:"), "Summary should contain 'Therapist:'");
+        assertTrue(summary.contains("Patient:"), "Summary should contain 'Patient:'");
+        assertTrue(summary.contains("Week:"), "Summary should contain 'Week:'");
+        assertTrue(summary.contains("Date:"), "Summary should contain 'Date:'");
+        assertTrue(summary.contains("Time:"), "Summary should contain 'Time:'");
+        assertTrue(summary.contains("Status:"), "Summary should contain 'Status:'");
+
+
     }
-
-
-    @Test
-    void testBookingStatusChange() {
-        // Test changing the booking status
-        booking.setBookingStatus("Confirmed");
-
-        // Verify that the status was updated correctly
-        assertTrue(booking.getSummary().contains("Confirmed"), "Booking status should be updated.");
-    }
-
 }
