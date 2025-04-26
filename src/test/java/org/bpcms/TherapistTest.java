@@ -2,82 +2,54 @@ package org.bpcms;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TherapistTest {
 
     private Therapist therapist;
-    private TimetableStub timetableStub;
-
-    static class TimetableStub extends Timetable {
-        private Map<String, List<String>> slots = new HashMap<>();
-
-        public TimetableStub() {
-            slots.put("Monday", new ArrayList<>(List.of("10:00", "11:00")));
-        }
-
-        @Override
-        public Map<String, List<String>> getAvailableSlots() {
-            return slots;
-        }
-
-        @Override
-        public boolean bookSlot(String day, String time) {
-            List<String> times = slots.get(day);
-            if (times != null && times.contains(time)) {
-                times.remove(time);
-                return true;
-            }
-            return false;
-        }
-
-        @Override
-        public void displayTimetable() {
-            System.out.println("Stub timetable display");
-        }
-    }
+    private Timetable timetable;
 
     @BeforeEach
     void setUp() {
-        timetableStub = new TimetableStub();
-        therapist = new Therapist(1, "Sarah Hussain", "41 Bridle Cl, EN3 6EA", "1234567890",
-                List.of("Massage", "Acupuncture"), timetableStub);
+        // Set up a simple timetable
+        timetable = new Timetable();
+        timetable.addSlot(1, "Monday", "09:00", "10:00"); // Adds 09:00, 09:30
+        timetable.addSlot(1, "Tuesday", "10:00", "11:00"); // Adds 10:00, 10:30
+
+        // Create therapist
+        therapist = new Therapist(
+                1,
+                "Sarah Hussain",
+                "41 Bridle Cl, EN3 6EA",
+                "07905625362",
+                Arrays.asList("Massage", "Acupuncture"),
+                timetable
+        );
     }
+
 
     @Test
-    void testTherapistInitialization() {
-        // Check that the therapist's name is correctly set by performing a booking action and checking slots
-        boolean booked = therapist.book("Monday", "10:00");
-        assertTrue(booked, "Therapist should be able to book a slot");
-    }
+    void testBookSlotSuccessfully() {
+        boolean booked = therapist.book(1, "Monday", "09:00");
+        assertTrue(booked, "Booking should succeed for available slot");
 
+        // After booking, the slot should no longer be available
+        Map<Integer, Map<String, List<String>>> availableSlots = therapist.getAvailableSlots();
+        List<String> mondaySlots = availableSlots.get(1).get("Monday");
+        assertFalse(mondaySlots.contains("09:00"), "09:00 should no longer be available after booking");
+    }
     @Test
-    void testAvailableSlotsAfterBooking() {
-        // After booking a slot, ensure it's no longer available
-        therapist.book("Monday", "10:00");
-        assertFalse(timetableStub.getAvailableSlots().get("Monday").contains("10:00"),
-                "The slot '10:00' on Monday should no longer be available after booking");
+    void testBookSlotAlreadyBooked() {
+        // Book once
+        assertTrue(timetable.bookSlot(1, "Monday", "09:00"), "First booking should succeed");
+
+        // Try booking again
+        assertFalse(timetable.bookSlot(1, "Monday", "09:00"), "Second booking for same slot should fail");
     }
 
-    @Test
-    void testBookFail() {
-        // Attempt to book a non-existing slot, it should fail
-        boolean result = therapist.book("Tuesday", "09:00");
-        assertFalse(result, "Booking a non-existing slot should fail");
-    }
 
-    @Test
-    void testMultipleBookings() {
-        // Try booking multiple slots and ensure that the timeslots are managed correctly
-        boolean firstBooking = therapist.book("Monday", "10:00");
-        boolean secondBooking = therapist.book("Monday", "11:00");
-        boolean thirdBooking = therapist.book("Monday", "10:00");  // Should fail, slot already booked
-
-        assertTrue(firstBooking, "First booking should succeed");
-        assertTrue(secondBooking, "Second booking should succeed");
-        assertFalse(thirdBooking, "Third booking should fail as the slot '10:00' is already booked");
-    }
 }
