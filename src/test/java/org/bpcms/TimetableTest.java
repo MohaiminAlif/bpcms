@@ -1,7 +1,9 @@
 package org.bpcms;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,57 +14,60 @@ class TimetableTest {
     @BeforeEach
     void setUp() {
         timetable = new Timetable();
+        timetable.addSlot(1, "Monday", "09:00", "11:00");  // Should generate 09:00, 09:30, 10:00, 10:30
+        timetable.addSlot(2, "Tuesday", "10:00", "11:00"); // 10:00, 10:30
     }
 
     @Test
-    void testAddSlot() {
-        timetable.addSlot("Monday", "09:00", "11:00");
+    void testAddSlotAndAvailableSlots() {
+        Map<Integer, Map<String, List<String>>> available = timetable.getAvailableSlots();
 
-        // Since we don't use getter methods, we will check if the slot is correctly available
-        assertTrue(timetable.bookSlot("Monday", "09:00"), "Slot should be available after adding.");
-        assertFalse(timetable.bookSlot("Monday", "09:00"), "Slot should not be available after booking.");
+        assertNotNull(available, "Available slots map should not be null");
+        assertTrue(available.containsKey(1), "Week 1 should be present");
+        assertTrue(available.containsKey(2), "Week 2 should be present");
+
+        List<String> mondaySlots = available.get(1).get("Monday");
+        assertEquals(4, mondaySlots.size(), "There should be 4 slots on Monday");
+        assertTrue(mondaySlots.contains("09:00"), "09:00 should be available");
+        assertTrue(mondaySlots.contains("09:30"), "09:30 should be available");
+        assertTrue(mondaySlots.contains("10:00"), "10:00 should be available");
+        assertTrue(mondaySlots.contains("10:30"), "10:30 should be available");
     }
 
     @Test
-    void testBookSlotSuccess() {
-        timetable.addSlot("Monday", "09:00", "10:00");
+    void testBookSlotSuccessfully() {
+        boolean booked = timetable.bookSlot(1, "Monday", "09:00");
+        assertTrue(booked, "Booking 09:00 on Monday week 1 should succeed");
 
-        // Book the slot and check if the booking was successful
-        boolean isBooked = timetable.bookSlot("Monday", "09:00");
-        assertTrue(isBooked, "Slot should be bookable when available.");
+        Map<Integer, Map<String, List<String>>> available = timetable.getAvailableSlots();
+        List<String> mondaySlots = available.get(1).get("Monday");
+        assertFalse(mondaySlots.contains("09:00"), "09:00 should no longer be available after booking");
     }
 
     @Test
-    void testBookSlotFailure() {
-        timetable.addSlot("Monday", "09:00", "10:00");
+    void testBookSlotAlreadyBooked() {
+        // Book once
+        assertTrue(timetable.bookSlot(1, "Monday", "09:00"), "First booking should succeed");
 
-        // Try booking a non-existent slot or an already booked slot
-        timetable.bookSlot("Monday", "09:00");  // Booking the first slot
-        boolean isBookedAgain = timetable.bookSlot("Monday", "09:00");  // Trying to book again
-
-        assertFalse(isBookedAgain, "Slot should not be available for booking again.");
+        // Try booking again
+        assertFalse(timetable.bookSlot(1, "Monday", "09:00"), "Second booking for same slot should fail");
     }
 
     @Test
-    void testGetAvailableSlots() {
-        timetable.addSlot("Monday", "09:00", "11:00");
-
-        // Initially, all slots should be available
-        timetable.bookSlot("Monday", "09:00");
-
-        // After booking one slot, only the other should be available
-        var availableSlots = timetable.getAvailableSlots();
-        assertTrue(availableSlots.containsKey("Monday"), "Monday should have available slots.");
-        assertTrue(availableSlots.get("Monday").contains("10:00"), "Slot 10:00 should be available.");
-        assertFalse(availableSlots.get("Monday").contains("09:00"), "Slot 09:00 should not be available.");
+    void testBookSlotInvalidDay() {
+        boolean booked = timetable.bookSlot(1, "Sunday", "09:00"); // No Sunday slot
+        assertFalse(booked, "Booking for non-existent day should fail");
     }
 
     @Test
-    void testDisplayTimetable() {
-        timetable.addSlot("Monday", "09:00", "11:00");
+    void testBookSlotInvalidTime() {
+        boolean booked = timetable.bookSlot(1, "Monday", "12:00"); // Time not added
+        assertFalse(booked, "Booking for non-existent time should fail");
+    }
 
-        // Capture system output to check if timetable is displayed properly
-        // This test is mainly to verify if the display functionality works as expected.
-        timetable.displayTimetable();
+    @Test
+    void testBookSlotInvalidWeek() {
+        boolean booked = timetable.bookSlot(3, "Monday", "09:00"); // Week 3 not added
+        assertFalse(booked, "Booking for non-existent week should fail");
     }
 }
