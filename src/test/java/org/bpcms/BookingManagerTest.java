@@ -1,53 +1,43 @@
 package org.bpcms;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+class TimetableTest {
 
-class BookingManagerTest {
-
-    private BookingManager bookingManager;
-    private Therapist therapist;
+    private Timetable timetable;
 
     @BeforeEach
     void setUp() {
-        bookingManager = new BookingManager();
-        therapist = new Therapist(1, "Sarah Hussain", "12 Main St", "1234567890",
-                List.of("Massage", "Acupuncture"), new TherapistTest.TimetableStub());
+        timetable = new Timetable();
+        timetable.addSlot(1, "Monday", "09:00", "11:00"); // Adds 09:00 and 09:30 and 10:00 and 10:30 slots
     }
 
     @Test
-    void testShowAllBookingsDisplaysAtLeastOne() {
-        bookingManager.makeBooking(therapist, "Abid Hussain", 250420001, "Monday", "11:00", "Pending");
-
-        // Again, this would normally check printed output.
-        // We just ensure it runs without errors.
-        assertDoesNotThrow(() -> bookingManager.showAllBookings());
+    void testAddSlotAndGetAvailableSlots() {
+        Map<Integer, Map<String, List<String>>> slots = timetable.getAvailableSlots();
+        assertTrue(slots.containsKey(1));
+        assertTrue(slots.get(1).containsKey("Monday"));
+        assertEquals(4, slots.get(1).get("Monday").size()); // 4 slots between 9:00 and 11:00
     }
 
     @Test
-    void testGetBookingsByPatientReturnsCorrectBooking() {
-        bookingManager.makeBooking(therapist, "Yasin", 250420003, "Monday", "10:00", "Pending");
-        bookingManager.makeBooking(therapist, "Mohsin", 250420002, "Monday", "11:00", "Pending");
+    void testBookSlotSuccess() {
+        boolean booked = timetable.bookSlot(1, "Monday", "09:00");
+        assertTrue(booked);
 
-        List<Booking> results = bookingManager.getBookingsByPatient("Yasin");
-
-        assertEquals(1, results.size(), "Should return one booking for Yasin.");
-        assertTrue(results.getFirst().getSummary().contains("Patient: Yasin"));
+        Map<Integer, Map<String, List<String>>> available = timetable.getAvailableSlots();
+        assertFalse(available.get(1).get("Monday").contains("09:00")); // After booking, 09:00 should not be available
     }
 
     @Test
-    void testMultipleBookingsSamePatient() {
-        bookingManager.makeBooking(therapist, "Kalam", 105, "Tuesday", "10:00", "Pending");
-        bookingManager.makeBooking(therapist, "Kalam", 105, "Wednesday", "10:30", "Pending");
-
-        List<Booking> bookings = bookingManager.getBookingsByPatient("Kalam");
-
-        assertEquals(2, bookings.size(), "Should return two bookings for Kalam.");
-        assertTrue(bookings.get(0).getSummary().contains("Kalam"));
-        assertTrue(bookings.get(1).getSummary().contains("Kalam"));
+    void testBookSlotFailure() {
+        timetable.bookSlot(1, "Monday", "09:00"); // First booking
+        boolean bookedAgain = timetable.bookSlot(1, "Monday", "09:00"); // Try booking same again
+        assertFalse(bookedAgain);
     }
 }
