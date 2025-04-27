@@ -9,7 +9,6 @@ import java.util.Arrays;
 class BookingTest {
 
     private Booking booking;
-    private Therapist therapist;
 
     @BeforeEach
     void setUp() {

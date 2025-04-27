@@ -40,10 +40,6 @@ public class BookingManager {
         bookings = new ArrayList<>();
     }
 
-    public List<Booking> getAllBookings() {
-        return bookings;
-    }
-
     // This is the new method to display the 4-week calendar
     public void displayCalendar() {
         Map<Integer, List<Booking>> bookingsByWeek = new TreeMap<>();

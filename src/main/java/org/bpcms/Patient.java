@@ -37,9 +37,13 @@ public class Patient {
     }
 
 
-    public int getID() { return id; }
+    public int getID() {
+        return id;
+    }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     @Override
     public String toString() {
