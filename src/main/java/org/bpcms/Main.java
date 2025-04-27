@@ -108,7 +108,8 @@ public class Main {
                         System.out.println("\n--- Patient Management ---");
                         System.out.println("1. Add a Patient");
                         System.out.println("2. View all Patients");
-                        System.out.println("3. Go Back");
+                        System.out.println("3. Delete Patient");
+                        System.out.println("4. Go Back");
                         System.out.print("Enter your choice: ");
 
                         int choice2 = scanner.nextInt();
@@ -141,6 +142,11 @@ public class Main {
                                 break;
 
                             case 3:
+                                System.out.print("Enter Patient ID to delete: ");
+                                int patientId = Integer.parseInt(scanner.nextLine());
+                                Patient.deletePatientById(patients, patientId);
+                                break;
+                            case 4:
                                 break;
                        }
                         break;

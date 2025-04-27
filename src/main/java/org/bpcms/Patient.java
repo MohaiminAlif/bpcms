@@ -2,6 +2,8 @@ package org.bpcms;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
+import java.util.List;
 
 public class Patient {
     private static String lastDate = "";
@@ -46,9 +48,28 @@ public class Patient {
         return Integer.parseInt(fullId);
     }
 
-    public int getID() { return id; }
+    public int getID() {
+        return id;
+    }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
+
+    public static boolean deletePatientById(List<Patient> patients, int patientId) {
+        Iterator<Patient> iterator = patients.iterator();
+        while (iterator.hasNext()) {
+            Patient p = iterator.next();
+            if (p.getID() == patientId) {
+                iterator.remove();
+                System.out.println("Patient with ID " + patientId + " has been deleted successfully.");
+                return true;
+            }
+        }
+        System.out.println("Patient with ID " + patientId + " not found.");
+        return false;
+    }
+
 
     @Override
     public String toString() {
