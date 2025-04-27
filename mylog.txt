@@ -1,3 +1,149 @@
+commit 8ace01baa49c0735b1376501971577c2454d0c66
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sun Apr 27 03:03:26 2025 +0100
+
+    uml diagram png updated
+
+commit 1ad2dd0df1d1301c6fc6d831d1be96848e680551
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sun Apr 27 00:43:10 2025 +0100
+
+    updated project minor bugs
+
+commit 778798876cef89eb63b6d3fbfb374cffdd2f12d5
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Apr 26 18:33:49 2025 +0100
+
+    Updated BookingManager junit terst
+
+commit 704906f2e81cccc7d17a7042d67553fe095afd86
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Apr 26 18:33:29 2025 +0100
+
+    Updated timetable junit test
+
+commit eb7fba2050a3fadd781982d62b6a42b60ebaad6c
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Apr 26 18:15:52 2025 +0100
+
+    Therapist junit tests updated
+
+commit b920d0664e6baff11f69f875f87b4607515d8c7d
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Apr 26 18:11:12 2025 +0100
+
+    Therapist Class updated
+
+commit 53260fca6c1fde925a08d4656c96d0ad03ce94a6
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Apr 26 17:47:31 2025 +0100
+
+    Updated Patient junit test
+
+commit 2f04cd31baffa852d2662f71adfbb9a344a685da
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Apr 26 17:37:57 2025 +0100
+
+    Updated Booking Manager junit test
+
+commit a92f2c4eab9c9c38f54be1014bb42ada9a323810
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Apr 26 13:29:54 2025 +0100
+
+    added patient same time slot booking verification check
+
+commit 78bcc9195db14864c137f2cc78e20bbadbc319c6
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Apr 26 13:29:04 2025 +0100
+
+    uml diagram updated
+
+commit 30de737e124e188e6455de45417ef496e5432184
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Apr 26 13:27:53 2025 +0100
+
+    updated Booking junit test
+
+commit 725797fa82ef1af78806b6e180b0b1575be21c1a
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sun Apr 20 15:26:03 2025 +0100
+
+    Updated BookingManager junit test
+
+commit 811942ed964109c95c95393c956962bd0db6f0aa
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sun Apr 20 13:57:20 2025 +0100
+
+    Created BookingManager junit test file
+
+commit 9d3b7e0134f2aa1bdd31725694558bde09f550cb
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sun Apr 20 01:47:03 2025 +0100
+
+    Created BookingTest junit test file
+
+commit 96b3f637f82ae7e9a01e814a154a26707716df49
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sun Apr 20 00:22:22 2025 +0100
+
+    Updated PatientTest junit test
+
+commit 13ad383dadf249467c89c93fb64644e6e701359b
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sun Apr 20 00:00:26 2025 +0100
+
+    Created PatientTest junit test file
+
+commit d84a8e4d46381b93a81c2c35e879d6b012776c4c
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Apr 19 23:49:52 2025 +0100
+
+    Created Timetable Test junit test
+
+commit 3fb27059cc97e10b93a07b40c36eba075fab93ca
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Apr 19 23:12:07 2025 +0100
+
+    Therapist Test added
+
+commit b7ce89577ebe25dc5c0790f23ea690a072c5e9be
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Apr 19 22:05:23 2025 +0100
+
+    main java class updated, treatment list now dynamically retrieved
+
+commit 2f3d00022fe164c13f0dfe817256de278a55e85c
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Sat Apr 19 20:39:33 2025 +0100
+
+    booking system updated
+
+commit b951530694adb8acf00aa512ed7f5664c66b77ac
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Thu Apr 17 05:16:35 2025 +0100
+
+    booking status implemented into the system
+
+commit f43b87062f509b953d78b52c3335ac293d80d80d
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Wed Apr 16 17:12:23 2025 +0100
+
+    Main updated with new patient ID showing after adding in the memory
+
+commit fd366090ff58fa3160ca417f1529a542565ba807
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Wed Apr 16 16:45:28 2025 +0100
+
+    Patient Class updated
+    
+    Patient now hard coded and Patients can be added manually
+
+commit 581e09a05b9e8749d3ffd5847fe9de5ce8eb956f
+Author: IMohaiminAlif <imohaiminalif@gmail.com>
+Date:   Tue Apr 15 21:38:25 2025 +0100
+
+    booking system fixed with individual time slots of 30 mins for available hours for each therapist
+
 commit bd47da9eb31934370ece838da270a8baf8ea3ebe
 Author: IMohaiminAlif <imohaiminalif@gmail.com>
 Date:   Sun Apr 13 15:17:47 2025 +0100
